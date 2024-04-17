@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { catchError, map, of } from "rxjs";
-import { findProductByCategoryFailure, findProductByCategorySuccess, findProductByIdFailure, findProductByIdSuccess, saveProductFailure, saveProductSucces } from "./product.action";
+import { deleteProductFailure, deleteProductSuccess, findProductByCategoryFailure, findProductByCategorySuccess, findProductByIdFailure, findProductByIdSuccess, saveProductFailure, saveProductSucces } from "./product.action";
 import { error } from "console";
 
 @Injectable({
@@ -98,6 +98,23 @@ export class ProductService {
                 ))
             })
         ).subscribe((action)=>this.store.dispatch(action));
+    }
+
+    deleteProduct(productId: any) {
+        const headers = this.getHeader();
+
+        return this.http.delete(`${this.API_BASE_URL}/api/admin/products/${productId}/delete`, { headers }).pipe(
+            map((data: any) => {
+                console.log("Product deleted successfully", data);
+                return deleteProductSuccess({ productId });
+            }),
+            catchError((error: any) => {
+                return of(deleteProductFailure(
+                    error.response && error.response.data.message ?
+                        error.response.data.message : error.message
+                ));
+            })
+        ).subscribe((action) => this.store.dispatch(action));
     }
 
 }

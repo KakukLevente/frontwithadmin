@@ -15,15 +15,7 @@ export const filters = [
         ],
     },
 
-    {
-        id: "size",
-        name: "Size",
-        options: [
-            { value: "S", label: "S" },
-            { value: "M", label: "M" },
-            { value: "L", label: "L" },
-        ],
-    },
+
 ];
 
 export const singleFilter = [

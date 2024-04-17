@@ -81,7 +81,11 @@ export class NavbarComponent {
 
   handleLogout=()=>{
     this.userService.logout()
+
+    this.router.navigateByUrl('/');
   }
+
+  
 
   
 }
